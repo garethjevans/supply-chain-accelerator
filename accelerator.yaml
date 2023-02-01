@@ -14,6 +14,38 @@ accelerator:
     inputType: text
     dataType: string
     required: true
+  - label: Has Tests
+    description: "If set to true, a source tester stage will be generated"
+    defaultValue: true
+    name: hasTests
+    inputType: checkbox
+    dataType: boolean
+    required: true
+  - label: Has Scan
+    description: "If set to true, a source & image scan stage will be generated"
+    defaultValue: true
+    name: hasScan
+    inputType: checkbox
+    dataType: boolean
+    required: true
+  - label: Scaning Tool
+    description: The scanning tool to use for the source & image scan stage
+    defaultValue: "grype"
+    name: grype
+    inputType: select
+    dataType: string
+    required: true
+    choices:
+    - value: grype
+      text: Grype (default)
+    - value: snyk
+      text: Snyk (beta)
+    - value: prisma
+      text: Prisma
+    - value: carbonblack
+      text: Carbon Black
+    dependsOn: 
+      name: hasScan
   imports:
   - name: tap-workload
       
