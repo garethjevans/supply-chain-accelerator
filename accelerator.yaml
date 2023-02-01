@@ -5,3 +5,15 @@ accelerator:
   tags:
   - tanzu
   - supply-chain
+
+  options:
+  - label: Workload Type
+    description: The type of workload
+    defaultValue: web
+    name: workloadType
+    inputType: text
+    dataType: string
+    required: true
+  imports:
+  - name: tap-workload
+      
