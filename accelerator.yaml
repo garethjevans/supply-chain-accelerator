@@ -31,7 +31,7 @@ accelerator:
   - label: Scaning Tool
     description: The scanning tool to use for the source & image scan stage
     defaultValue: "grype"
-    name: grype
+    name: scanTool
     inputType: select
     dataType: string
     required: true
@@ -46,6 +46,20 @@ accelerator:
       text: Carbon Black
     dependsOn: 
       name: hasScan
+  - label: Build Tool
+    description: The image build tool to use
+    defaultValue: "tbs"
+    name: buildTool
+    inputType: select
+    dataType: string
+    required: true
+    choices:
+    - value: tbs
+      text: Tanzu Build Service
+    - value: kaniko
+      text: Google Kaniko
+    - value: ko
+      text: Google Ko
   imports:
   - name: tap-workload
       
