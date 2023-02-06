@@ -16,22 +16,22 @@ accelerator:
     required: true
   - label: Has Tests
     description: "If set to true, a source tester stage will be generated"
-    defaultValue: true
+    defaultValue: false
     name: hasTests
     inputType: checkbox
     dataType: boolean
     required: true
-  - label: Has Scan
-    description: "If set to true, a source & image scan stage will be generated"
-    defaultValue: true
-    name: hasScan
+  - label: Has Source Scan
+    description: "If set to true, a source scan stage will be generated"
+    defaultValue: false
+    name: hasSourceScan
     inputType: checkbox
     dataType: boolean
     required: true
-  - label: Scaning Tool
-    description: The scanning tool to use for the source & image scan stage
+  - label: Source Scaning Tool
+    description: The scanning tool to use for the source scan stage
     defaultValue: "grype"
-    name: scanTool
+    name: sourceScanningTool
     inputType: select
     dataType: string
     required: true
@@ -45,7 +45,7 @@ accelerator:
     - value: carbonblack
       text: Carbon Black
     dependsOn: 
-      name: hasScan
+      name: hasSourceScan
   - label: Build Tool
     description: The image build tool to use
     defaultValue: "tbs"
@@ -58,8 +58,31 @@ accelerator:
       text: Tanzu Build Service
     - value: kaniko
       text: Google Kaniko
-    - value: ko
-      text: Google Ko
+  - label: Has Image Scan
+    description: "If set to true, an image scan stage will be generated"
+    defaultValue: true
+    name: hasImageScan
+    inputType: checkbox
+    dataType: boolean
+    required: true
+  - label: Image Scaning Tool
+    description: The scanning tool to use for the image scan stage
+    defaultValue: "grype"
+    name: imageScanningTool
+    inputType: select
+    dataType: string
+    required: true
+    choices:
+    - value: grype
+      text: Grype (default)
+    - value: snyk
+      text: Snyk (beta)
+    - value: prisma
+      text: Prisma
+    - value: carbonblack
+      text: Carbon Black
+    dependsOn: 
+      name: hasImageScan
   imports:
   - name: tap-workload
       
