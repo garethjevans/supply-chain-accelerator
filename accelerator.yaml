@@ -7,6 +7,7 @@ accelerator:
   - supply-chain
 
   options:
+
   - label: Workload Type
     description: The type of workload
     defaultValue: web
@@ -14,6 +15,7 @@ accelerator:
     inputType: text
     dataType: string
     required: true
+
   - label: Has Tests
     description: "If set to true, a source tester stage will be generated"
     defaultValue: false
@@ -21,6 +23,7 @@ accelerator:
     inputType: checkbox
     dataType: boolean
     required: true
+
   - label: Has Source Scan
     description: "If set to true, a source scan stage will be generated"
     defaultValue: false
@@ -28,6 +31,7 @@ accelerator:
     inputType: checkbox
     dataType: boolean
     required: true
+
   - label: Source Scaning Tool
     description: The scanning tool to use for the source scan stage
     defaultValue: "grype"
@@ -46,6 +50,7 @@ accelerator:
       text: Carbon Black
     dependsOn: 
       name: hasSourceScan
+
   - label: Build Tool
     description: The image build tool to use
     defaultValue: "tbs"
@@ -58,6 +63,7 @@ accelerator:
       text: Tanzu Build Service
     - value: kaniko
       text: Google Kaniko
+
   - label: Has Image Scan
     description: "If set to true, an image scan stage will be generated"
     defaultValue: true
@@ -65,7 +71,8 @@ accelerator:
     inputType: checkbox
     dataType: boolean
     required: true
-  - label: Image Scaning Tool
+
+  - label: Image Scanning Tool
     description: The scanning tool to use for the image scan stage
     defaultValue: "grype"
     name: imageScanningTool
@@ -83,6 +90,33 @@ accelerator:
       text: Carbon Black
     dependsOn: 
       name: hasImageScan
+
+  - label: Deployment Model
+    description: Use GitOps or RegistryOps to deploy applications
+    defaultValue: "config-writer-and-pull-requester-template"
+    name: configWriterTemplate
+    inputType: select
+    dataType: string
+    required: true
+    choices:
+    - value: config-writer-and-pull-requester-template
+      text: GitOps
+    - value: config-writer-template
+      text: RegistryOps
+
+  - label: Deploy onto the same cluster
+    description: Should we deploy to the same or an external cluster
+    defaultValue: "deliverable-template"
+    name: externalDeliveryTemplate
+    inputType: select
+    dataType: string
+    required: true
+    choices:
+    - value: external-deliverable-template
+      text: External Delivery
+    - value: deliverable-template
+      text: Standard Delivery
+
   imports:
   - name: tap-workload
       
