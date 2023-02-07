@@ -1,0 +1,5 @@
+{
+  "projectName": "test-supply-chain-default-options",
+  "workloadType": "web",
+  "imageScanningTool": "grype"
+}

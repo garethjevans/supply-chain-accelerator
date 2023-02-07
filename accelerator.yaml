@@ -1,6 +1,7 @@
 accelerator:
   displayName: TAP Supply Chain
-  description: Boilerplate for generating a Tanzu Application Platform Supply Chain
+  description: Boilerplate for generating a Tanzu Application Platform Supply Chain that takes a workload from
+    source, builds and prepares it for deployment.
   iconUrl: https://avatars.githubusercontent.com/u/54452117?s=200&v=4
   tags:
   - tanzu
@@ -53,13 +54,13 @@ accelerator:
 
   - label: Build Tool
     description: The image build tool to use
-    defaultValue: "tbs"
+    defaultValue: kpack
     name: buildTool
     inputType: select
     dataType: string
     required: true
     choices:
-    - value: tbs
+    - value: kpack
       text: Tanzu Build Service
     - value: kaniko
       text: Google Kaniko
@@ -74,7 +75,7 @@ accelerator:
 
   - label: Image Scanning Tool
     description: The scanning tool to use for the image scan stage
-    defaultValue: "grype"
+    defaultValue: grype
     name: imageScanningTool
     inputType: select
     dataType: string
@@ -119,4 +120,30 @@ accelerator:
 
   imports:
   - name: tap-workload
-      
+     
+engine:
+  merge:
+  - include: [ "**" ]
+    exclude: [ "README.md", "Makefile", "build-local.sh", "generated/**", "tests/**" ]
+
+  - include: [ "config/*.yaml", "cluster-supply-chain.yaml" ]
+    chain:
+    - type: ReplaceText
+      substitutions:
+      - text: "source-test-scan-to-url"
+        with: "#artifactId.toLowerCase()"
+      - text: "configWriterTemplate"
+        with: "#configWriterTemplate"
+      - text: "externalDeliveryTemplate"
+        with: "#externalDeliveryTemplate"
+      - text: "workloadType"
+        with: "#workloadType"
+      - text: "buildTool"
+        with: "#buildTool+'-template'"
+    - merge:
+      - type: InvokeFragment
+        reference: tap-workload
+      - include: [ "**" ]
+      onConflict: UseFirst
+
+

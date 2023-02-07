@@ -1,0 +1,12 @@
+{
+  "projectName": "test-supply-chain-all-options",
+  "workloadType": "other",
+  "hasTests": true,
+  "hasSourceScan": true,
+  "hasImageScan": true,
+  "sourceScanningTool": "grype",
+  "imageScanningTool": "grype",
+  "buildTool": "kaniko",
+  "configWriterTemplate": "config-writer-template",
+  "externalDeliveryTemplate": "external-deliverable"
+}
