@@ -7,13 +7,13 @@
 apiVersion: carto.run/v1alpha1
 kind: ClusterSupplyChain
 metadata:
-  name: source-test-scan-to-url
+  name: test-supply-chain-all-options
 spec:
   selectorMatchExpressions:
     - key: 'apps.tanzu.vmware.com/workload-type'
       operator: In
       values: 
-      - workloadType
+      - other
 
   params:
     - name: maven_repository_url
@@ -44,20 +44,7 @@ spec:
     #@ if/end data.values.gitops.repository_name:
     - name: gitops_repository_name
       default: #@ data.values.gitops.repository_name
-# StartGitOps
-    #@ if/end data.values.gitops.pull_request.server_kind:
-    - name: gitops_server_kind
-      default: #@ data.values.gitops.pull_request.server_kind
-    #@ if/end "commit_branch" in data.values.gitops.pull_request:
-    - name: gitops_commit_branch
-      default: #@ data.values.gitops.pull_request.commit_branch
-    #@ if/end data.values.gitops.pull_request.pull_request_title:
-    - name: gitops_pull_request_title
-      default: #@ data.values.gitops.pull_request.pull_request_title
-    #@ if/end data.values.gitops.pull_request.pull_request_body:
-    - name: gitops_pull_request_body
-      default: #@ data.values.gitops.pull_request.pull_request_body
-# EndGitOps
+
 
   resources:
   - name: source-provider
@@ -70,7 +57,6 @@ spec:
       - name: gitImplementation
         value: #@ data.values.git_implementation
 
-# StartTests
   - name: source-tester
     templateRef:
       kind: ClusterSourceTemplate
@@ -78,9 +64,7 @@ spec:
     sources:
     - resource: source-provider
       name: source
-# EndTests
 
-# StartSourceScan
   - name: source-scanner
     templateRef:
       kind: ClusterSourceTemplate
@@ -91,20 +75,14 @@ spec:
       - name: scanning_source_template
         default: #@ data.values.scanning.source.template
     sources:
-# StartTests
       - resource: source-tester
         name: source
-# EndTests
-# StartNoTests
-      - resource: source-provider
-        name: source
-# EndNoTests
-# EndSourceScan
+
           
   - name: image-provider
     templateRef:
       kind: ClusterImageTemplate
-      name: buildTool
+      name: kaniko-template
     params:
       - name: serviceAccount
         default: #@ data.values.service_account
@@ -119,22 +97,9 @@ spec:
       - name: docker_build_extra_args
         default: []
     sources:
-# StartSourceScan
       - resource: source-scanner
         name: source
-# EndSourceScan
-# StartNoSourceScan
-# StartNoTests
-      - resource: source-provider
-        name: source
-# EndNoTests
-# StartTests
-      - resource: source-tester
-        name: source
-# EndTests
-# EndNoSourceScan
 
-# StartImageScan
   - name: image-scanner
     templateRef:
       kind: ClusterImageTemplate
@@ -147,7 +112,6 @@ spec:
     images:
       - resource: image-provider
         name: image
-# EndImageScan
           
   - name: config-provider
     templateRef:
@@ -157,14 +121,8 @@ spec:
       - name: serviceAccount
         default: #@ data.values.service_account
     images:
-# StartImageScan
     - resource: image-scanner
       name: image
-# EndImageScan
-# StartNoImageScan
-    - resource: image-provider
-      name: image
-# EndNoImageScan
 
   - name: app-config
     templateRef:
@@ -203,7 +161,7 @@ spec:
   - name: config-writer
     templateRef:
       kind: ClusterTemplate
-      name: configWriterTemplate
+      name: config-writer-template
     params:
       - name: serviceAccount
         default: #@ data.values.service_account
@@ -216,7 +174,7 @@ spec:
   - name: deliverable
     templateRef:
       kind: ClusterTemplate
-      name: externalDeliveryTemplate
+      name: external-deliverable
     params:
       - name: registry
         value: #@ data.values.registry

@@ -146,4 +146,94 @@ engine:
       - include: [ "**" ]
       onConflict: UseFirst
 
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "!#hasTests"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartTests[\\s\\S]+?# EndTests"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoTests\\s|# EndNoTests\\s"
+          with: "''"
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "#hasTests"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoTests[\\s\\S]+?# EndNoTests"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartTests\\s|# EndTests\\s"
+          with: "''"
 
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "!#hasSourceScan"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartSourceScan[\\s\\S]+?# EndSourceScan"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoSourceScan\\s|# EndNoSourceScan\\s"
+          with: "''"
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "#hasSourceScan"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoSourceScan[\\s\\S]+?# EndNoSourceScan\\s"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartSourceScan\\s|# EndSourceScan\\s"
+          with: "''"
+
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "!#hasImageScan"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartImageScan[\\s\\S]+?# EndImageScan"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoImageScan\\s|# EndNoImageScan\\s"
+          with: "''"
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "#hasImageScan"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoImageScan[\\s\\S]+?# EndNoImageScan\\s"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartImageScan\\s|# EndImageScan\\s"
+          with: "''"
+
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "#configWriterTemplate == 'config-writer-template'"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartGitOps[\\s\\S]+?# EndGitOps"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoGitOps\\s|# EndNoGitOps\\s"
+          with: "''"
+    - include: [ "cluster-supply-chain.yaml" ]
+      condition: "#configWriterTemplate != 'config-writer-template'"
+      chain:
+      - type: ReplaceText
+        regex:
+          pattern: "# StartNoGitOps[\\s\\S]+?# EndNoGitOps\\s"
+          with: "''"
+      - type: ReplaceText
+        regex:
+          pattern: "# StartGitOps\\s|# EndGitOps\\s"
+          with: "''"
