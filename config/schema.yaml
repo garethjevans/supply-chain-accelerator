@@ -1,13 +1,13 @@
 #@data/values-schema
 ---
 registry:
-  server: ghcr.io
-  repository: my-repository
+  server: ""
+  repository: ""
 
 maven:
   repository:
     url: https://repo1.maven.org
-    secret_name: maven-repository-secret
+    secret_name: ""
 
 gitops:
   branch: main
@@ -30,10 +30,10 @@ git_implementation: git
 
 scanning:
   source:
-    policy: my-source-policy
-    template: my-source-template
+    policy: scan-policy
+    template: scan-template
   image:
-    policy: my-image-policy
-    template: my-image-template
+    policy: scan-policy
+    template: scan-template
 
-cluster_builder: my-builder
+cluster_builder: default
