@@ -22,7 +22,7 @@ tree $OUTPUT
 echo "================================================"
 echo "Supply Chain Delta"
 set +e
-diff $OUTPUT/cluster-supply-chain.yaml cluster-supply-chain.yaml
+diff $OUTPUT/config/cluster-supply-chain.yaml config/cluster-supply-chain.yaml
 set -e
 
 #echo "================================================"
@@ -33,4 +33,8 @@ set -e
 
 echo "================================================"
 echo "Checking $OUTPUT/cluster-supply-chain.yaml against tests/expected-$ENV.yaml"
-diff $OUTPUT/cluster-supply-chain.yaml tests/expected-$ENV.yaml
+diff $OUTPUT/config/cluster-supply-chain.yaml tests/expected-$ENV.yaml
+
+pushd $OUTPUT
+	./display.sh
+popd

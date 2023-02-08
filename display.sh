@@ -2,7 +2,4 @@
 
 set -euo pipefail
 
-ytt \
-  --ignore-unknown-comments \
-  --file ./ \
-  --data-values-file values.yaml
+ytt --ignore-unknown-comments --file ./config 

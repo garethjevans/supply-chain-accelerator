@@ -126,7 +126,7 @@ engine:
   - include: [ "**" ]
     exclude: [ "README.md", "Makefile", "build-local.sh", "generated/**", "tests/**" ]
 
-  - include: [ "config/*.yaml", "cluster-supply-chain.yaml" ]
+  - include: [ "config/*.yaml" ]
     chain:
     - type: ReplaceText
       substitutions:
@@ -146,7 +146,7 @@ engine:
       - include: [ "**" ]
       onConflict: UseFirst
 
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "!#hasTests"
       chain:
       - type: ReplaceText
@@ -157,7 +157,7 @@ engine:
         regex:
           pattern: "# StartNoTests\\s|# EndNoTests\\s"
           with: "''"
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "#hasTests"
       chain:
       - type: ReplaceText
@@ -169,7 +169,7 @@ engine:
           pattern: "# StartTests\\s|# EndTests\\s"
           with: "''"
 
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "!#hasSourceScan"
       chain:
       - type: ReplaceText
@@ -180,7 +180,7 @@ engine:
         regex:
           pattern: "# StartNoSourceScan\\s|# EndNoSourceScan\\s"
           with: "''"
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "#hasSourceScan"
       chain:
       - type: ReplaceText
@@ -192,7 +192,7 @@ engine:
           pattern: "# StartSourceScan\\s|# EndSourceScan\\s"
           with: "''"
 
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "!#hasImageScan"
       chain:
       - type: ReplaceText
@@ -203,7 +203,7 @@ engine:
         regex:
           pattern: "# StartNoImageScan\\s|# EndNoImageScan\\s"
           with: "''"
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "#hasImageScan"
       chain:
       - type: ReplaceText
@@ -215,7 +215,7 @@ engine:
           pattern: "# StartImageScan\\s|# EndImageScan\\s"
           with: "''"
 
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "#configWriterTemplate == 'config-writer-template'"
       chain:
       - type: ReplaceText
@@ -226,7 +226,7 @@ engine:
         regex:
           pattern: "# StartNoGitOps\\s|# EndNoGitOps\\s"
           with: "''"
-    - include: [ "cluster-supply-chain.yaml" ]
+    - include: [ "config/cluster-supply-chain.yaml" ]
       condition: "#configWriterTemplate != 'config-writer-template'"
       chain:
       - type: ReplaceText
