@@ -122,17 +122,7 @@ spec:
   - name: app-config
     templateRef:
       kind: ClusterConfigTemplate
-      #@ if len(data.values.supported_workloads) == 1:
-      name: #@ data.values.supported_workloads[0].cluster_config_template_name
-      #@ else:
-      options:
-      #@ for supported_workload in data.values.supported_workloads:
-      - name: #@ supported_workload.cluster_config_template_name
-        selector:
-          matchLabels:
-            apps.tanzu.vmware.com/workload-type: #@ supported_workload.type
-      #@ end
-      #@ end
+      name: web
     configs:
       - resource: config-provider
         name: config
