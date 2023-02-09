@@ -17,7 +17,7 @@ accelerator:
     dataType: string
     required: true
 
-  - label: Has Tests
+  - label: Requires Tests
     description: "If set to true, a source tester stage will be generated"
     defaultValue: false
     name: hasTests
@@ -25,7 +25,7 @@ accelerator:
     dataType: boolean
     required: true
 
-  - label: Has Source Scan
+  - label: Requires Source Scan
     description: "If set to true, a source scan stage will be generated"
     defaultValue: false
     name: hasSourceScan
@@ -65,7 +65,7 @@ accelerator:
     - value: kaniko
       text: Google Kaniko
 
-  - label: Has Image Scan
+  - label: Requires Image Scan
     description: "If set to true, an image scan stage will be generated"
     defaultValue: true
     name: hasImageScan
