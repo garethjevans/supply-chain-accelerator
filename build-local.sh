@@ -34,7 +34,3 @@ set -e
 echo "================================================"
 echo "Checking $OUTPUT/cluster-supply-chain.yaml against tests/expected-$ENV.yaml"
 diff $OUTPUT/config/cluster-supply-chain.yaml tests/expected-$ENV.yaml
-
-pushd $OUTPUT
-	./display.sh
-popd

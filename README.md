@@ -12,4 +12,8 @@ ytt \
   kubectl apply -f-
 ```
 
+Or with `kapp`
 
+```
+kapp -y deploy -a source-test-scan-to-url -f <(ytt -f ./config)
+```
