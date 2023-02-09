@@ -25,11 +25,11 @@ set +e
 diff $OUTPUT/config/cluster-supply-chain.yaml config/cluster-supply-chain.yaml
 set -e
 
-#echo "================================================"
-#echo "Workload Delta"
-#set +e
-#diff $OUTPUT/config/workload.yaml config/workload.yaml
-#set -e
+echo "================================================"
+echo "README.md Delta"
+set +e
+diff $OUTPUT/README.md README.md
+set -e
 
 echo "================================================"
 echo "Checking $OUTPUT/cluster-supply-chain.yaml against tests/expected-$ENV.yaml"
