@@ -33,25 +33,6 @@ accelerator:
     dataType: boolean
     required: true
 
-  - label: Source Scaning Tool
-    description: The scanning tool to use for the source scan stage
-    defaultValue: "grype"
-    name: sourceScanningTool
-    inputType: select
-    dataType: string
-    required: true
-    choices:
-    - value: grype
-      text: Grype (default)
-    - value: snyk
-      text: Snyk (beta)
-    - value: prisma
-      text: Prisma
-    - value: carbonblack
-      text: Carbon Black
-    dependsOn: 
-      name: hasSourceScan
-
   - label: Build Tool
     description: The image build tool to use
     defaultValue: kpack
@@ -72,25 +53,6 @@ accelerator:
     inputType: checkbox
     dataType: boolean
     required: true
-
-  - label: Image Scanning Tool
-    description: The scanning tool to use for the image scan stage
-    defaultValue: grype
-    name: imageScanningTool
-    inputType: select
-    dataType: string
-    required: true
-    choices:
-    - value: grype
-      text: Grype (default)
-    - value: snyk
-      text: Snyk (beta)
-    - value: prisma
-      text: Prisma
-    - value: carbonblack
-      text: Carbon Black
-    dependsOn: 
-      name: hasImageScan
 
   - label: Deployment Model
     description: Use GitOps or RegistryOps to deploy applications
